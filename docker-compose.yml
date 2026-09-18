@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: pulsepoll-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7-alpine
+    container_name: pulsepoll-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pulsepoll-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - MONGO_URI=mongodb://mongodb:27017
+      - DB_NAME=live_polling
+      - REDIS_ADDR=redis:6379
+      - REDIS_PASSWORD=
+      - CLIENT_ORIGIN=*
+    depends_on:
+      - mongodb
+      - redis
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pulsepoll-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
+  redis_data:

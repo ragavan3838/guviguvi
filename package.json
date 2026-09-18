@@ -1,0 +1,27 @@
+{
+  "name": "pulsepoll-workspace",
+  "version": "1.0.0",
+  "description": "PulsePoll - Real-Time Live Polling Engine with React, Go (Gin), MongoDB, and Redis",
+  "private": true,
+  "scripts": {
+    "start": "cmd.exe /c run.bat",
+    "start:ps": "powershell -ExecutionPolicy Bypass -File .\\run.ps1",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "test:mongo": "cd backend && \"C:\\Program Files\\Go\\bin\\go.exe\" run ./cmd/test_mongo",
+    "test:realtime": "node test_realtime.cjs",
+    "test": "node test_realtime.cjs"
+  },
+  "keywords": [
+    "real-time",
+    "live-polling",
+    "redis",
+    "golang",
+    "gin",
+    "mongodb",
+    "react",
+    "websockets"
+  ],
+  "author": "",
+  "license": "MIT"
+}
